@@ -5,6 +5,25 @@
     <meta name="discord-verification" content="codigo-de-verificacao-aqui">
     <title>MTDev's Creations</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .custom-cursor { animation: blink 0.7s infinite; }
+        .gradient-text {
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa, #93c5fd);
+            background-size: 300% 300%;
+            background-position: 100% 100%;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradientMove 5s ease infinite;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 100% 100%; }
+            25% { background-position: 0% 100%; }
+            50% { background-position: 0% 0%; }
+            75% { background-position: 100% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
     <nav class="bg-gray-800 text-white p-4">
@@ -21,5 +40,39 @@
     <footer class="bg-gray-800 text-white p-4 text-center">
         <p>&copy; 2024 MTDev. Todos os direitos reservados.</p>
     </footer>
+    <script>
+        const palavras = [
+            "pesadelos", "código espaguete", "o código que só funciona se você fechar os olhos",
+            "a atualização que quebrou tudo que funcionava", "problemas que nem o stack overflow resolve",
+            "sem documentação", "enquanto está sem dormir", "deploys de sexta-feira",
+            "uma funcionalidade que já funcionava", "o algoritmo que faz sentido... até a próxima atualização",
+            "condições de corrida", "vazamentos de memória", "erros de 'funciona na minha máquina'",
+            "bugs causados por digitação", "exceções em tempo de execução", "o próprio debugger",
+            "depois do café", "o commit de 'não mexe aqui'"
+        ];
+        const elementoTexto = document.getElementById('dynamic-text');
+        async function digitarPalavra(palavra) {
+            for (let i = 0; i < palavra.length; i++) {
+                elementoTexto.textContent += palavra[i];
+                await new Promise(resolve => setTimeout(resolve, 150));
+            }
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            await apagarPalavra();
+        }
+        async function apagarPalavra() {
+            while (elementoTexto.textContent.length > 0) {
+                elementoTexto.textContent = elementoTexto.textContent.slice(0, -1);
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+        }
+        async function cicloTexto() {
+            while (true) {
+                for (let palavra of palavras) {
+                    await digitarPalavra(palavra);
+                }
+            }
+        }
+        cicloTexto();
+    </script>
 </body>
 </html>
