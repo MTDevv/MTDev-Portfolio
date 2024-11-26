@@ -117,6 +117,9 @@
             languageDropdown.classList.toggle('show');
         }
 
+        // Global variable to store the current text cycle
+        let currentTextCycle = null;
+
         function setLanguage(lang) {
             const selectedContent = content[lang];
             
@@ -131,8 +134,16 @@
             // Close dropdown
             languageDropdown.classList.remove('show');
 
+            // Stop any existing text cycle
+            if (currentTextCycle) {
+                clearTimeout(currentTextCycle);
+            }
+
             // Restart text animation with new language
+            const elementoTexto = document.getElementById('dynamic-text');
             elementoTexto.textContent = '';
+            
+            // Start a new text cycle
             cicloTexto();
         }
 
@@ -148,7 +159,6 @@
             }
         });
 
-        // Existing theme toggle and initialization code remains the same as in the original script
         function setTheme(isDark) {
             if (isDark) {
                 // Dark Mode
