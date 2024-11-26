@@ -22,63 +22,26 @@
             75% { background-position: 0% 100%; }
             100% { background-position: 100% 100%; }
         }
-        .language-dropdown {
-            display: none;
-            position: absolute;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            right: 0;
-            top: 100%;
-            z-index: 10;
-        }
-        .language-dropdown.show {
-            display: block;
-        }
-        .dark .language-dropdown {
-            background-color: #2d3748;
-            color: white;
-        }
     </style>
 </head>
 <body id="mainBody" class="bg-white text-black dark:bg-gray-900 dark:text-white min-h-screen flex flex-col transition-colors duration-300">
-    <nav id="mainNavbar" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 transition-colors duration-300 relative">
+    <nav id="mainNavbar" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 transition-colors duration-300">
         <div class="container mx-auto flex justify-between items-center">
             <div id="navbarTitle" class="font-bold text-xl text-black dark:text-white transition-colors duration-300"> 
                 MTDev's Creations 
             </div>
-            <div class="flex items-center space-x-2">
-                <button id="languageToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 12a9 9 0 1 0 9 -9" />
-                        <path d="M3 12l9 -9" />
-                        <path d="M12 3a9 9 0 1 1 0 18" />
-                        <path d="M12 12l9 9" />
-                        <path d="M12 21h.01" />
-                        <path d="M3 12h.01" />
-                    </svg>
-                </button>
-                <div id="languageDropdown" class="language-dropdown">
-                    <button id="languagePortuguese" class="block w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700">Português</button>
-                    <button id="languageEnglish" class="block w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700">English</button>
-                </div>
-                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
-                    <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-lienjoin="round">
-                        <!-- Dynamically changed icon -->
-                    </svg>
-                </button>
-            </div>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+                <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Dynamically changed icon -->
+                </svg>
+            </button>
         </div>
     </nav>
     <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
         <div class="text-4xl md:text-4xl lg:text-6xl font-bold mb-4">
-            <span id="mainTitle">MTDev está debugando</span><br>
-            <span id="dynamic-text" class="gradient-text"></span><span class="custom-cursor">|</span>
+            MTDev está debugando<br><span id="dynamic-text" class="gradient-text"></span><span class="custom-cursor">|</span>
         </div>
-        <p id="mainDescription" class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.
-        </p>
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.</p>
     </div>
     <footer id="mainFooter" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 text-center transition-colors duration-300">
         <p id="footerText" class="text-black dark:text-white transition-colors duration-300">
@@ -93,74 +56,48 @@
         const navbarTitle = document.getElementById('navbarTitle');
         const mainFooter = document.getElementById('mainFooter');
         const footerText = document.getElementById('footerText');
-        const languageToggle = document.getElementById('languageToggle');
-        const languageDropdown = document.getElementById('languageDropdown');
-        const languagePortuguese = document.getElementById('languagePortuguese');
-        const languageEnglish = document.getElementById('languageEnglish');
-    
-        const content = {
-            portuguese: {
-                title: "MTDev está debugando",
-                description: "Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.",
-                copyright: "© 2024 MTDev. Todos os direitos reservados."
-            },
-            english: {
-                title: "MTDev is debugging",
-                description: "Hello, thanks for visiting my website!<br> Under development, for future uses.",
-                copyright: "© 2024 MTDev. All rights reserved."
-            }
-        };
-    
-        function toggleLanguageDropdown() {
-            languageDropdown.classList.toggle('show');
-        }
-    
-        let currentTextCycle = null;
-    
-        function setLanguage(lang) {
-            const selectedContent = content[lang];
-            currentLanguage = lang;
-            localStorage.setItem('language', lang);
-            location.reload();
-        }
-    
-        languageToggle.addEventListener('click', toggleLanguageDropdown);
-        languagePortuguese.addEventListener('click', () => setLanguage('portuguese'));
-        languageEnglish.addEventListener('click', () => setLanguage('english'));
-    
-        document.addEventListener('click', (event) => {
-            if (!languageToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
-                languageDropdown.classList.remove('show');
-            }
-        });
-    
+        
         function setTheme(isDark) {
             if (isDark) {
+                // Dark Mode
                 document.documentElement.classList.add('dark');
                 themeIcon.innerHTML = `
                     <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m3.343-5.657L5.515 5.515m12.728 12.728L18.485 18.485M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" stroke="#fbbf24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 `;
+                
+                // Background and text colors
                 mainBody.classList.remove('bg-white', 'text-black');
                 mainBody.classList.add('bg-gray-900', 'text-white');
+                
+                // Navbar
                 mainNavbar.classList.remove('bg-gray-100', 'text-black');
                 mainNavbar.classList.add('bg-gray-800', 'text-white');
                 navbarTitle.classList.remove('text-black');
                 navbarTitle.classList.add('text-white');
+                
+                // Footer
                 mainFooter.classList.remove('bg-gray-100', 'text-black');
                 mainFooter.classList.add('bg-gray-800', 'text-white');
                 footerText.classList.remove('text-black');
                 footerText.classList.add('text-white');
             } else {
+                // Light Mode
                 document.documentElement.classList.remove('dark');
                 themeIcon.innerHTML = `
                     <path d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" stroke="#3b82f6" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 `;
+                
+                // Background and text colors
                 mainBody.classList.remove('bg-gray-900', 'text-white');
                 mainBody.classList.add('bg-white', 'text-black');
+                
+                // Navbar
                 mainNavbar.classList.remove('bg-gray-800', 'text-white');
                 mainNavbar.classList.add('bg-gray-100', 'text-black');
                 navbarTitle.classList.remove('text-white');
                 navbarTitle.classList.add('text-black');
+                
+                // Footer
                 mainFooter.classList.remove('bg-gray-800', 'text-white');
                 mainFooter.classList.add('bg-gray-100', 'text-black');
                 footerText.classList.remove('text-white');
@@ -168,47 +105,33 @@
             }
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
-    
+
+        // Initialize theme
         const savedTheme = localStorage.getItem('theme');
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+        
         if (savedTheme === 'dark' || (savedTheme === null && prefersDarkMode)) {
             setTheme(true);
         } else {
             setTheme(false);
         }
-    
-        const savedLanguage = localStorage.getItem('language') || 'portuguese';
-        setLanguage(savedLanguage);
-    
+
+        // Toggle theme on button click
         themeToggle.addEventListener('click', () => {
             const isDark = document.documentElement.classList.contains('dark');
             setTheme(!isDark);
         });
-    
-        const palavras = {
-            portuguese: [
-                "pesadelos", "código espaguete", "o código que só funciona se você fechar os olhos",
-                "a atualização que quebrou tudo que funcionava", "problemas que nem o stack overflow resolve",
-                "sem documentação", "enquanto está sem dormir", "deploys de sexta-feira",
-                "uma funcionalidade que já funcionava", "o algoritmo que faz sentido... até a próxima atualização",
-                "condições de corrida", "vazamentos de memória", "erros de 'funciona na minha máquina'",
-                "bugs causados por digitação", "exceções em tempo de execução", "o próprio debugger",
-                "depois do café", "o commit de 'não mexe aqui'"
-            ],
-            english: [
-                "nightmares", "spaghetti code", "the code that only works if you close your eyes",
-                "the update that broke everything", "problems even stack overflow can't solve",
-                "no documentation", "while sleep-deprived", "Friday deploys",
-                "a feature that already worked", "the algorithm that makes sense... until the next update",
-                "race conditions", "memory leaks", "errors of 'it works on my machine'",
-                "typo bugs", "runtime exceptions", "the debugger itself",
-                "after coffee", "the 'don't touch this' commit"
-            ]
-        };
-    
-        let currentLanguage = 'portuguese';
-    
+
+        const palavras = [
+            "pesadelos", "código espaguete", "o código que só funciona se você fechar os olhos",
+            "a atualização que quebrou tudo que funcionava", "problemas que nem o stack overflow resolve",
+            "sem documentação", "enquanto está sem dormir", "deploys de sexta-feira",
+            "uma funcionalidade que já funcionava", "o algoritmo que faz sentido... até a próxima atualização",
+            "condições de corrida", "vazamentos de memória", "erros de 'funciona na minha máquina'",
+            "bugs causados por digitação", "exceções em tempo de execução", "o próprio debugger",
+            "depois do café", "o commit de 'não mexe aqui'"
+        ];
+        const elementoTexto = document.getElementById('dynamic-text');
         async function digitarPalavra(palavra) {
             for (let i = 0; i < palavra.length; i++) {
                 elementoTexto.textContent += palavra[i];
@@ -217,25 +140,20 @@
             await new Promise(resolve => setTimeout(resolve, 2000));
             await apagarPalavra();
         }
-    
         async function apagarPalavra() {
             while (elementoTexto.textContent.length > 0) {
                 elementoTexto.textContent = elementoTexto.textContent.slice(0, -1);
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
         }
-    
         async function cicloTexto() {
             while (true) {
-                for (let palavra of palavras[currentLanguage]) {
+                for (let palavra of palavras) {
                     await digitarPalavra(palavra);
                 }
             }
         }
-    
-        const elementoTexto = document.getElementById('dynamic-text');
         cicloTexto();
     </script>
-
 </body>
 </html>
