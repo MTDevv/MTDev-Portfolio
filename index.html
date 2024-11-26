@@ -22,26 +22,62 @@
             75% { background-position: 0% 100%; }
             100% { background-position: 100% 100%; }
         }
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            right: 0;
+            top: 100%;
+            z-index: 10;
+        }
+        .language-dropdown.show {
+            display: block;
+        }
+        .dark .language-dropdown {
+            background-color: #2d3748;
+            color: white;
+        }
     </style>
 </head>
 <body id="mainBody" class="bg-white text-black dark:bg-gray-900 dark:text-white min-h-screen flex flex-col transition-colors duration-300">
-    <nav id="mainNavbar" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 transition-colors duration-300">
+    <nav id="mainNavbar" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 transition-colors duration-300 relative">
         <div class="container mx-auto flex justify-between items-center">
             <div id="navbarTitle" class="font-bold text-xl text-black dark:text-white transition-colors duration-300"> 
                 MTDev's Creations 
             </div>
-            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
-                <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <!-- Dynamically changed icon -->
-                </svg>
-            </button>
+            <div class="flex items-center space-x-2">
+                <button id="languageToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300 relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12l14 0" />
+                        <path d="M5 12l6 -6" />
+                        <path d="M5 12l6 6" />
+                        <path d="M19 12l-6 -6" />
+                        <path d="M19 12l-6 6" />
+                    </svg>
+                </button>
+                <div id="languageDropdown" class="language-dropdown">
+                    <button id="languagePortuguese" class="block w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700">Português</button>
+                    <button id="languageEnglish" class="block w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700">English</button>
+                </div>
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+                    <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Dynamically changed icon -->
+                    </svg>
+                </button>
+            </div>
         </div>
     </nav>
     <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
         <div class="text-4xl md:text-4xl lg:text-6xl font-bold mb-4">
-            MTDev está debugando<br><span id="dynamic-text" class="gradient-text"></span><span class="custom-cursor">|</span>
+            <span id="mainTitle">MTDev está debugando</span><br>
+            <span id="dynamic-text" class="gradient-text"></span><span class="custom-cursor">|</span>
         </div>
-        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.</p>
+        <p id="mainDescription" class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.
+        </p>
     </div>
     <footer id="mainFooter" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 text-center transition-colors duration-300">
         <p id="footerText" class="text-black dark:text-white transition-colors duration-300">
@@ -56,7 +92,60 @@
         const navbarTitle = document.getElementById('navbarTitle');
         const mainFooter = document.getElementById('mainFooter');
         const footerText = document.getElementById('footerText');
+        const languageToggle = document.getElementById('languageToggle');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const languagePortuguese = document.getElementById('languagePortuguese');
+        const languageEnglish = document.getElementById('languageEnglish');
+        const mainTitle = document.getElementById('mainTitle');
+        const mainDescription = document.getElementById('mainDescription');
+        const footerCopyright = document.getElementById('footerText');
         
+        // Language content
+        const content = {
+            portuguese: {
+                title: "MTDev está debugando",
+                description: "Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.",
+                copyright: "© 2024 MTDev. Todos os direitos reservados."
+            },
+            english: {
+                title: "MTDev is Debugging",
+                description: "Hello, thanks for visiting my website!<br> Under development, for future uses.",
+                copyright: "© 2024 MTDev. All rights reserved."
+            }
+        };
+
+        // Language toggle functionality
+        function toggleLanguageDropdown() {
+            languageDropdown.classList.toggle('show');
+        }
+
+        function setLanguage(lang) {
+            const selectedContent = content[lang];
+            
+            // Update page content
+            mainTitle.textContent = selectedContent.title;
+            mainDescription.innerHTML = selectedContent.description;
+            footerCopyright.textContent = selectedContent.copyright;
+
+            // Save language preference
+            localStorage.setItem('language', lang);
+
+            // Close dropdown
+            languageDropdown.classList.remove('show');
+        }
+
+        // Language toggle event listeners
+        languageToggle.addEventListener('click', toggleLanguageDropdown);
+        languagePortuguese.addEventListener('click', () => setLanguage('portuguese'));
+        languageEnglish.addEventListener('click', () => setLanguage('english'));
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!languageToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
+                languageDropdown.classList.remove('show');
+            }
+        });
+
         function setTheme(isDark) {
             if (isDark) {
                 // Dark Mode
@@ -115,6 +204,10 @@
         } else {
             setTheme(false);
         }
+
+        // Initialize language
+        const savedLanguage = localStorage.getItem('language') || 'portuguese';
+        setLanguage(savedLanguage);
 
         // Toggle theme on button click
         themeToggle.addEventListener('click', () => {
