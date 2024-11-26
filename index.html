@@ -25,9 +25,9 @@
     </style>
 </head>
 <body class="dark:bg-gray-900 dark:text-white bg-white text-black min-h-screen flex flex-col transition-colors duration-300">
-    <nav class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4">
+    <nav class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4 transition-colors duration-300">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="font-bold text-xl"> MTDev's Creations </div>
+            <div class="font-bold text-xl dark:text-white text-black transition-colors duration-300"> MTDev's Creations </div>
             <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
                 <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <!-- Dynamically changed icon -->
@@ -41,15 +41,13 @@
         </div>
         <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.</p>
     </div>
-    <footer class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4 text-center">
-        <p>&copy; 2024 MTDev. Todos os direitos reservados.</p>
+    <footer class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4 text-center transition-colors duration-300">
+        <p class="dark:text-white text-black transition-colors duration-300">&copy; 2024 MTDev. Todos os direitos reservados.</p>
     </footer>
     <script>
-        // Theme Toggle Script
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
         
-        // Function to set theme
         function setTheme(isDark) {
             if (isDark) {
                 document.documentElement.classList.add('dark');
@@ -69,7 +67,6 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
 
-        // Initialize theme from localStorage or system preference
         const savedTheme = localStorage.getItem('theme');
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
@@ -79,7 +76,6 @@
             setTheme(false);
         }
 
-        // Toggle theme on button click
         themeToggle.addEventListener('click', () => {
             const isDark = document.documentElement.classList.contains('dark');
             setTheme(!isDark);
