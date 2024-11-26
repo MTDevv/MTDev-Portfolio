@@ -20,6 +20,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis; /* Para evitar overflow de texto */
+            display: inline-block;
         }
 
         /* Ajuste específico para garantir que o texto quebre corretamente no PC */
@@ -28,6 +29,23 @@
                 white-space: normal; /* Permite quebras de linha no PC */
                 max-width: 90%; /* Limita a largura para não ultrapassar */
                 word-wrap: break-word; /* Quebra palavras longas corretamente */
+            }
+        }
+
+        /* Responsividade para o tamanho do texto */
+        .title-text {
+            font-size: 2rem;
+        }
+
+        @media (min-width: 640px) {
+            .title-text {
+                font-size: 3rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .title-text {
+                font-size: 4rem;
             }
         }
     </style>
@@ -46,7 +64,7 @@
     <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
         <div class="mb-8">
             <!-- Reduzido o tamanho para dispositivos móveis e controlado a largura -->
-            <div class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+            <div class="title-text font-bold mb-4">
                 MTDev está debugando<br><span id="dynamic-text" class="text-blue-500 dynamic-text"></span><span class="custom-cursor">|</span>
             </div>
             <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto">
@@ -102,13 +120,15 @@
         }
 
         async function cicloTexto() {
+            let primeiraPalavra = true;
             while (true) {
                 // Loop de palavras, agora quebra a linha após a primeira palavra ser digitada
                 for (let index = 0; index < palavras.length; index++) {
-                    if (index > 0) {
+                    if (!primeiraPalavra) {
                         // Coloca a quebra de linha após a primeira palavra ser digitada
                         elementoTexto.innerHTML += "<br>";
                     }
+                    primeiraPalavra = false; // A partir daqui, permite a quebra de linha
                     await digitarPalavra(palavras[index]);
                 }
             }
