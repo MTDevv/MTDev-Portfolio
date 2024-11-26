@@ -6,3 +6,20 @@
 .custom-cursor {
     animation: blink 0.7s infinite;
 }
+
+.gradient-text {
+    background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa, #93c5fd);
+    background-size: 300% 300%;
+    background-position: 100% 100%;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradientMove 5s ease infinite;
+}
+        
+@keyframes gradientMove {
+    0% { background-position: 100% 100%; }
+    25% { background-position: 0% 100%; }
+    50% { background-position: 0% 0%; }
+    75% { background-position: 100% 0%; }
+    100% { background-position: 100% 100%; }
+}
