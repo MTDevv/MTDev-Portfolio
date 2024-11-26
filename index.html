@@ -21,6 +21,15 @@
             overflow: hidden;
             text-overflow: ellipsis; /* Para evitar overflow de texto */
         }
+
+        /* Ajuste específico para garantir que o texto quebre corretamente no PC */
+        @media (min-width: 1024px) {
+            .dynamic-text {
+                white-space: normal; /* Permite quebras de linha no PC */
+                max-width: 90%; /* Limita a largura para não ultrapassar */
+                word-wrap: break-word; /* Quebra palavras longas corretamente */
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
@@ -47,7 +56,7 @@
     </div>
 
     <footer class="bg-gray-800 text-white p-4 text-center">
-        <p>&copy; 2024 MTDev. Todos os direitos reservados.</p>
+        <p>&copy; 2024 MTDev. All rights reserved.</p>
     </footer>
 
     <script>
