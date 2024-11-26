@@ -29,11 +29,11 @@
 
     <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
         <div class="mb-8">
-            <!-- Aumentei o tamanho do texto para que fique mais legível -->
-            <div class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4">
-                MTDev está debugando     <br><span id="dynamic-text" class="text-blue-500"></span><span class="custom-cursor">|</span>
+            <!-- Usando "whitespace-nowrap" para evitar quebras de linha -->
+            <div class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 whitespace-nowrap">
+                MTDev está debugando<br><span id="dynamic-text" class="text-blue-500"></span><span class="custom-cursor">|</span>
             </div>
-            <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-300 max-w-3xl mx-auto">
+            <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-300 max-w-3xl mx-auto whitespace-nowrap">
                 em desenvolvimento
             </p>
         </div>
