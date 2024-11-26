@@ -24,10 +24,12 @@
         }
     </style>
 </head>
-<body class="dark:bg-gray-900 dark:text-white bg-white text-black min-h-screen flex flex-col transition-colors duration-300">
-    <nav class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4 transition-colors duration-300">
+<body id="mainBody" class="bg-white text-black dark:bg-gray-900 dark:text-white min-h-screen flex flex-col transition-colors duration-300">
+    <nav id="mainNavbar" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 transition-colors duration-300">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="font-bold text-xl dark:text-white text-black transition-colors duration-300"> MTDev's Creations </div>
+            <div id="navbarTitle" class="font-bold text-xl text-black dark:text-white transition-colors duration-300"> 
+                MTDev's Creations 
+            </div>
             <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
                 <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <!-- Dynamically changed icon -->
@@ -41,32 +43,70 @@
         </div>
         <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.</p>
     </div>
-    <footer class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4 text-center transition-colors duration-300">
-        <p class="dark:text-white text-black transition-colors duration-300">&copy; 2024 MTDev. Todos os direitos reservados.</p>
+    <footer id="mainFooter" class="bg-gray-100 text-black dark:bg-gray-800 dark:text-white p-4 text-center transition-colors duration-300">
+        <p id="footerText" class="text-black dark:text-white transition-colors duration-300">
+            &copy; 2024 MTDev. Todos os direitos reservados.
+        </p>
     </footer>
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
+        const mainBody = document.getElementById('mainBody');
+        const mainNavbar = document.getElementById('mainNavbar');
+        const navbarTitle = document.getElementById('navbarTitle');
+        const mainFooter = document.getElementById('mainFooter');
+        const footerText = document.getElementById('footerText');
         
         function setTheme(isDark) {
             if (isDark) {
+                // Dark Mode
                 document.documentElement.classList.add('dark');
                 themeIcon.innerHTML = `
                     <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m3.343-5.657L5.515 5.515m12.728 12.728L18.485 18.485M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" stroke="#fbbf24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 `;
-                document.body.classList.remove('bg-white', 'text-black');
-                document.body.classList.add('bg-gray-900', 'text-white');
+                
+                // Background and text colors
+                mainBody.classList.remove('bg-white', 'text-black');
+                mainBody.classList.add('bg-gray-900', 'text-white');
+                
+                // Navbar
+                mainNavbar.classList.remove('bg-gray-100', 'text-black');
+                mainNavbar.classList.add('bg-gray-800', 'text-white');
+                navbarTitle.classList.remove('text-black');
+                navbarTitle.classList.add('text-white');
+                
+                // Footer
+                mainFooter.classList.remove('bg-gray-100', 'text-black');
+                mainFooter.classList.add('bg-gray-800', 'text-white');
+                footerText.classList.remove('text-black');
+                footerText.classList.add('text-white');
             } else {
+                // Light Mode
                 document.documentElement.classList.remove('dark');
                 themeIcon.innerHTML = `
                     <path d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" stroke="#3b82f6" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 `;
-                document.body.classList.remove('bg-gray-900', 'text-white');
-                document.body.classList.add('bg-white', 'text-black');
+                
+                // Background and text colors
+                mainBody.classList.remove('bg-gray-900', 'text-white');
+                mainBody.classList.add('bg-white', 'text-black');
+                
+                // Navbar
+                mainNavbar.classList.remove('bg-gray-800', 'text-white');
+                mainNavbar.classList.add('bg-gray-100', 'text-black');
+                navbarTitle.classList.remove('text-white');
+                navbarTitle.classList.add('text-black');
+                
+                // Footer
+                mainFooter.classList.remove('bg-gray-800', 'text-white');
+                mainFooter.classList.add('bg-gray-100', 'text-black');
+                footerText.classList.remove('text-white');
+                footerText.classList.add('text-black');
             }
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
 
+        // Initialize theme
         const savedTheme = localStorage.getItem('theme');
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
@@ -76,6 +116,7 @@
             setTheme(false);
         }
 
+        // Toggle theme on button click
         themeToggle.addEventListener('click', () => {
             const isDark = document.documentElement.classList.contains('dark');
             setTheme(!isDark);
