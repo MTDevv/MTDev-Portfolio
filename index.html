@@ -29,18 +29,18 @@
 
     <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
         <div class="mb-8">
-            <!-- Tamanho de texto ajustado para telas pequenas, evitando quebras de linha antes de digitar -->
-            <div class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 whitespace-nowrap">
+            <!-- Removido whitespace-nowrap para permitir quebra de linha no texto dinâmico -->
+            <div class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
                 MTDev está debugando<br><span id="dynamic-text" class="text-blue-500"></span><span class="custom-cursor">|</span>
             </div>
-            <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto whitespace-pre-wrap">
+            <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto">
                 em desenvolvimento
             </p>
         </div>
     </div>
 
     <footer class="bg-gray-800 text-white p-4 text-center">
-        <p>&copy; 2024 MTDev. Todos os direitos reservados.</p>
+        <p>&copy; 2024 MTDev. All rights reserved.</p>
     </footer>
 
     <script>
@@ -68,6 +68,7 @@
         const elementoTexto = document.getElementById('dynamic-text');
 
         async function digitarPalavra(palavra) {
+            // Inicia a digitação da palavra
             for (let i = 0; i < palavra.length; i++) {
                 elementoTexto.textContent += palavra[i];
                 await new Promise(resolve => setTimeout(resolve, 150));
@@ -77,6 +78,7 @@
         }
 
         async function apagarPalavra() {
+            // Apaga a palavra digitada
             while (elementoTexto.textContent.length > 0) {
                 elementoTexto.textContent = elementoTexto.textContent.slice(0, -1);
                 await new Promise(resolve => setTimeout(resolve, 100));
@@ -85,8 +87,13 @@
 
         async function cicloTexto() {
             while (true) {
-                for (let palavra of palavras) {
-                    await digitarPalavra(palavra);
+                // Loop de palavras, agora quebra a linha após a primeira palavra ser digitada
+                for (let index = 0; index < palavras.length; index++) {
+                    if (index > 0) {
+                        // Coloca a quebra de linha após a primeira palavra ser digitada
+                        elementoTexto.innerHTML += "<br>";
+                    }
+                    await digitarPalavra(palavras[index]);
                 }
             }
         }
