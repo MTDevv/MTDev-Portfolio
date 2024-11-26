@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 <head>
     <meta charset="UTF-8">
     <title>MTDev's Creations</title>
@@ -24,22 +24,67 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex flex-col">
-    <nav class="bg-gray-800 text-white p-4">
+<body class="dark:bg-gray-900 dark:text-white bg-white text-black min-h-screen flex flex-col transition-colors duration-300">
+    <nav class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="font-bold text-xl"> MTDev's Creations </div>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+                <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Dynamically changed icon -->
+                </svg>
+            </button>
         </div>
     </nav>
     <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
         <div class="text-4xl md:text-4xl lg:text-6xl font-bold mb-4">
             MTDev está debugando<br><span id="dynamic-text" class="gradient-text"></span><span class="custom-cursor">|</span>
         </div>
-        <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.</p>
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Olá, obrigado por visitar meu website!<br> Em desenvolvimento, para futuros usos.</p>
     </div>
-    <footer class="bg-gray-800 text-white p-4 text-center">
+    <footer class="dark:bg-gray-800 bg-gray-100 text-black dark:text-white p-4 text-center">
         <p>&copy; 2024 MTDev. Todos os direitos reservados.</p>
     </footer>
     <script>
+        // Theme Toggle Script
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        // Function to set theme
+        function setTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                themeIcon.innerHTML = `
+                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m3.343-5.657L5.515 5.515m12.728 12.728L18.485 18.485M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" stroke="#fbbf24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                `;
+                document.body.classList.remove('bg-white', 'text-black');
+                document.body.classList.add('bg-gray-900', 'text-white');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.innerHTML = `
+                    <path d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" stroke="#3b82f6" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                `;
+                document.body.classList.remove('bg-gray-900', 'text-white');
+                document.body.classList.add('bg-white', 'text-black');
+            }
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Initialize theme from localStorage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (savedTheme === null && prefersDarkMode)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(!isDark);
+        });
+
         const palavras = [
             "pesadelos", "código espaguete", "o código que só funciona se você fechar os olhos",
             "a atualização que quebrou tudo que funcionava", "problemas que nem o stack overflow resolve",
@@ -72,55 +117,6 @@
             }
         }
         cicloTexto();
-
-        import React, { useState, useEffect } from 'react';
-        import { Moon, Sun } from 'lucide-react';
-
-        const ThemeToggle = () => {
-        const [isDarkMode, setIsDarkMode] = useState(true);
-
-        // Effect to set initial theme based on system preference
-        useEffect(() => {
-            const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            setIsDarkMode(prefersDarkMode);
-            updateTheme(prefersDarkMode);
-        }, []);
-
-          const updateTheme = (dark) => {
-            if (dark) {
-              document.documentElement.classList.add('dark');
-              document.body.classList.remove('bg-white', 'text-black');
-              document.body.classList.add('bg-gray-900', 'text-white');
-            } else {
-              document.documentElement.classList.remove('dark');
-              document.body.classList.remove('bg-gray-900', 'text-white');
-              document.body.classList.add('bg-white', 'text-black');
-            }
-          };
-        
-          const toggleTheme = () => {
-            const newMode = !isDarkMode;
-            setIsDarkMode(newMode);
-            updateTheme(newMode);
-          };
-        
-          return (
-            <button 
-              onClick={toggleTheme} 
-              className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-300"
-              aria-label="Toggle theme"
-            >
-              {isDarkMode ? (
-                <Sun className="text-yellow-500" size={24} />
-              ) : (
-                <Moon className="text-blue-500" size={24} />
-              )}
-            </button>
-          );
-        };
-        
-        export default ThemeToggle;
-        
     </script>
 </body>
 </html>
