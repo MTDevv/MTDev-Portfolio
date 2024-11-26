@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="discord-verification" content="codigo-de-verificacao-aqui">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Tag para responsividade -->
     <title>MTDev's Creations</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -14,47 +13,12 @@
         .custom-cursor {
             animation: blink 0.7s infinite;
         }
-
-        /* Garantir que o texto dinâmico não quebre linha enquanto é digitado */
-        .dynamic-text {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis; /* Para evitar overflow de texto */
-            display: inline-block;
-        }
-
-        /* Ajuste específico para garantir que o texto quebre corretamente no PC */
-        @media (min-width: 1024px) {
-            .dynamic-text {
-                white-space: normal; /* Permite quebras de linha no PC */
-                max-width: 90%; /* Limita a largura para não ultrapassar */
-                word-wrap: break-word; /* Quebra palavras longas corretamente */
-            }
-        }
-
-        /* Responsividade para o tamanho do texto */
-        .title-text {
-            font-size: 2rem;
-        }
-
-        @media (min-width: 640px) {
-            .title-text {
-                font-size: 3rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .title-text {
-                font-size: 4rem;
-            }
-        }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
-
     <nav class="bg-gray-800 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="font-bold text-xl">MTDev</div>
+            <div class="font-bold text-xl"> MTDev </div>
             <ul class="flex space-x-4">
                 <!-- Adicione links de navegação aqui, se necessário -->
             </ul>
@@ -63,11 +27,10 @@
 
     <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
         <div class="mb-8">
-            <!-- Reduzido o tamanho para dispositivos móveis e controlado a largura -->
-            <div class="title-text font-bold mb-4">
-                MTDev está debugando<br><span id="dynamic-text" class="text-blue-500 dynamic-text"></span><span class="custom-cursor">|</span>
+            <div class="text-4xl md:text-6xl lg:text-8xl font-bold mb-4">
+                MTDev está debugando<br><span id="dynamic-text" class="text-blue-500"></span><span class="custom-cursor">|</span>
             </div>
-            <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto">
+            <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
                 em desenvolvimento
             </p>
         </div>
@@ -79,30 +42,29 @@
 
     <script>
         const palavras = [
-            "pesadelos",
-            "código espaguete",
-            "o código que só funciona se você fechar os olhos",
-            "a atualização que quebrou tudo que funcionava",
-            "problemas que nem o stack overflow resolve",
-            "sem documentação",
-            "enquanto está sem dormir",
-            "deploys de sexta-feira",
-            "uma funcionalidade que já funcionava",
-            "o algoritmo que faz sentido... até a próxima atualização",
-            "condições de corrida",
-            "vazamentos de memória",
-            "erros de 'funciona na minha máquina'",
-            "bugs causados por digitação",
-            "exceções em tempo de execução",
-            "o próprio debugger",
-            "depois do café",
-            "o commit de 'não mexe aqui'",
-        ];
+  "pesadelos",
+  "código espaguete",
+  "o código que só funciona se você fechar os olhos",
+   "a atualização que quebrou tudo que funcionava",
+  "problemas que nem o stack overflow resolve",
+  "sem documentação",
+  "enquanto está sem dormir",
+  "deploys de sexta-feira",
+  "uma funcionalidade que já funcionava",
+  "o algoritmo que faz sentido... até a próxima atualização",
+  "condições de corrida",
+  "vazamentos de memória",
+  "erros de 'funciona na minha máquina'",
+  "bugs causados por digitação",
+  "exceções em tempo de execução",
+  "o próprio debugger",
+  "depois do café",
+  "o commit de 'não mexe aqui'",
+];
 
         const elementoTexto = document.getElementById('dynamic-text');
 
         async function digitarPalavra(palavra) {
-            // Inicia a digitação da palavra
             for (let i = 0; i < palavra.length; i++) {
                 elementoTexto.textContent += palavra[i];
                 await new Promise(resolve => setTimeout(resolve, 150));
@@ -112,7 +74,6 @@
         }
 
         async function apagarPalavra() {
-            // Apaga a palavra digitada
             while (elementoTexto.textContent.length > 0) {
                 elementoTexto.textContent = elementoTexto.textContent.slice(0, -1);
                 await new Promise(resolve => setTimeout(resolve, 100));
@@ -120,16 +81,9 @@
         }
 
         async function cicloTexto() {
-            let primeiraPalavra = true;
             while (true) {
-                // Loop de palavras, agora quebra a linha após a primeira palavra ser digitada
-                for (let index = 0; index < palavras.length; index++) {
-                    if (!primeiraPalavra) {
-                        // Coloca a quebra de linha após a primeira palavra ser digitada
-                        elementoTexto.innerHTML += "<br>";
-                    }
-                    primeiraPalavra = false; // A partir daqui, permite a quebra de linha
-                    await digitarPalavra(palavras[index]);
+                for (let palavra of palavras) {
+                    await digitarPalavra(palavra);
                 }
             }
         }
