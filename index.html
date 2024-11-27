@@ -38,10 +38,10 @@
             height: 22px; /* Tamanho proporcional da bandeira */
         }
 
-        /* Ajuste do tamanho da bandeira no menu de seleção */
+        /* Ajuste do tamanho da bandeira no menu de seleção (bandeiras retangulares) */
         .flag-icon-large {
-            width: 48px; /* Tamanho maior para o menu de seleção */
-            height: 32px;
+            width: 60px;  /* Aumentamos a largura para torná-las mais retangulares */
+            height: 40px; /* Ajuste da altura para manter a proporção retangular */
         }
 
         /* Alinhamento do nome e bandeira no menu */
@@ -62,6 +62,7 @@
         .language-name {
             margin-left: 12px;
             font-size: 1rem;
+            opacity: 0;
         }
 
         /* Botão principal de troca de idioma (sem fundo) */
@@ -75,6 +76,47 @@
 
         #language-toggle img {
             margin-right: 8px; /* Espaçamento entre a bandeira e o texto */
+        }
+
+        /* Animação de abertura do menu */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animação de fechamento do menu */
+        @keyframes slideUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Estilo do menu de idiomas */
+        #language-menu {
+            animation: slideDown 0.3s ease-out;
+            display: none; /* Inicialmente escondido */
+        }
+
+        /* Exibe o menu quando a classe "show" é adicionada */
+        #language-menu.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        /* Esconde o menu com animação de slide up */
+        #language-menu.hide {
+            animation: slideUp 0.3s ease-out;
         }
     </style>
 </head>
@@ -92,14 +134,14 @@
                         onclick="setLanguage('pt')"
                     >
                         <img src="https://flagcdn.com/w40/br.png" alt="Português" class="flag-icon-large">
-                        <span class="language-name">Português</span>
+                        <span class="language-name">‎.......‎......</span>
                     </button>
                     <button
                         class="language-option w-full"
                         onclick="setLanguage('en')"
                     >
                         <img src="https://flagcdn.com/w40/us.png" alt="English" class="flag-icon-large">
-                        <span class="language-name">English</span>
+                        <span class="language-name">‎‎.......‎......</span>
                     </button>
                 </div>
             </div>
@@ -159,8 +201,8 @@
                 ]
             }
         };
-
-        // Verificar o idioma salvo no localStorage ao carregar a página
+    
+    // Verificar o idioma salvo no localStorage ao carregar a página
         const savedLanguage = localStorage.getItem('language') || 'pt'; // 'pt' é o padrão
         setLanguage(savedLanguage, true); // Inicializa o idioma com base no valor salvo
 
@@ -186,7 +228,18 @@
         // Alterna a visibilidade do menu de idiomas
         function toggleLanguageMenu() {
             const menu = document.getElementById('language-menu');
-            menu.classList.toggle('hidden');
+            if (menu.classList.contains('show')) {
+                menu.classList.remove('show');
+                menu.classList.add('hide'); // Adiciona animação de fechamento
+                // Após a animação de fechamento, ocultamos o menu
+                setTimeout(() => {
+                    menu.classList.remove('hide');
+                    menu.style.display = 'none'; // Garante que o menu seja ocultado após a animação
+                }, 300); // Tempo necessário para a animação
+            } else {
+                menu.style.display = 'block'; // Exibe o menu antes de animar
+                menu.classList.add('show'); // Adiciona animação de abertura
+            }
         }
 
         document.getElementById('language-toggle').addEventListener('click', toggleLanguageMenu);
