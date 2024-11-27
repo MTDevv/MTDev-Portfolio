@@ -203,12 +203,18 @@
         };
     
     // Verificar o idioma salvo no localStorage ao carregar a página
-        const savedLanguage = localStorage.getItem('language') || 'pt'; // 'pt' é o padrão
+        const savedLanguage = ['pt', 'en'].includes(localStorage.getItem('language')) ? localStorage.getItem('language') : 'pt';
         setLanguage(savedLanguage, true); // Inicializa o idioma com base no valor salvo
 
         // Atualiza o idioma na página
         function setLanguage(lang, fromReload = false) {
+            if (!translations[lang]) {
+                console.error(`Idioma não suportado: ${lang}`);
+                return;
+            }
+
             const { title, description, footer, flag, label, palavras } = translations[lang];
+
 
             // Armazenar a preferência de idioma no localStorage
             localStorage.setItem('language', lang);
