@@ -32,10 +32,49 @@
             100% { background-position: 100% 100%; }
         }
 
-        /* Ajuste do tamanho da bandeira */
+        /* Ajuste do tamanho da bandeira no botão principal */
         .flag-icon {
-            width: 32px; /* Ajustado para um tamanho maior */
+            width: 32px; /* Tamanho pequeno para o botão principal */
+            height: 22px; /* Tamanho proporcional da bandeira */
+        }
+
+        /* Ajuste do tamanho da bandeira no menu de seleção */
+        .flag-icon-large {
+            width: 48px; /* Tamanho maior para o menu de seleção */
             height: 32px;
+        }
+
+        /* Alinhamento do nome e bandeira no menu */
+        .language-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px 12px; /* Ajuste do tamanho do botão de seleção */
+            background-color: #4B5563;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .language-option:hover {
+            background-color: #6B7280; /* Alteração de cor no hover */
+        }
+
+        .language-name {
+            margin-left: 12px;
+            font-size: 1rem;
+        }
+
+        /* Botão principal de troca de idioma (sem fundo) */
+        #language-toggle {
+            display: flex;
+            align-items: center;
+            background-color: transparent; /* Sem fundo */
+            padding: 4px; /* Ajuste no padding para o botão ficar compactado */
+            border-radius: 5px;
+        }
+
+        #language-toggle img {
+            margin-right: 8px; /* Espaçamento entre a bandeira e o texto */
         }
     </style>
 </head>
@@ -46,22 +85,21 @@
             <div class="relative">
                 <button id="language-toggle" class="flex items-center space-x-2">
                     <img id="language-icon" src="https://flagcdn.com/w40/br.png" alt="Idioma" class="flag-icon">
-                    <span id="language-label">Português</span>
                 </button>
                 <div id="language-menu" class="absolute hidden mt-2 bg-gray-700 rounded shadow-lg">
                     <button
-                        class="flex items-center space-x-2 w-full px-4 py-2 hover:bg-gray-600"
+                        class="language-option w-full"
                         onclick="setLanguage('pt')"
                     >
-                        <img src="https://flagcdn.com/w40/br.png" alt="Português" class="flag-icon">
-                        <span>Português</span>
+                        <img src="https://flagcdn.com/w40/br.png" alt="Português" class="flag-icon-large">
+                        <span class="language-name">Português</span>
                     </button>
                     <button
-                        class="flex items-center space-x-2 w-full px-4 py-2 hover:bg-gray-600"
+                        class="language-option w-full"
                         onclick="setLanguage('en')"
                     >
-                        <img src="https://flagcdn.com/w40/us.png" alt="English" class="flag-icon">
-                        <span>English</span>
+                        <img src="https://flagcdn.com/w40/us.png" alt="English" class="flag-icon-large">
+                        <span class="language-name">English</span>
                     </button>
                 </div>
             </div>
@@ -137,9 +175,9 @@
             document.getElementById('description-text').textContent = description;
             document.getElementById('footer-text').innerHTML = footer;
             document.getElementById('language-icon').src = flag;
-            document.getElementById('language-label').textContent = label;
             palavrasDigitadas(palavras);  // Atualiza as palavras digitadas
 
+            // Se não for um reload, recarregamos a página para refletir completamente a mudança
             if (!fromReload) {
                 window.location.reload();
             }
