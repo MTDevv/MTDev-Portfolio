@@ -1,280 +1,314 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTDev's Creations</title>
+    <title>MTDev Portfolio</title>
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/Images/favicon.ico">
+
     <style>
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .custom-cursor {
-            animation: blink 0.7s infinite;
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa, #93c5fd);
-            background-size: 300% 300%;
-            background-position: 100% 100%;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: gradientMove 5s ease infinite;
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 100% 100%; }
-            25% { background-position: 0% 100%; }
-            50% { background-position: 0% 0%; }
-            75% { background-position: 100% 0%; }
-            100% { background-position: 100% 100%; }
-        }
-
-        /* Ajuste do tamanho da bandeira no botão principal */
-        .flag-icon {
-            width: 32px;
-            height: 22px;
-        }
-
-        /* Ajuste do tamanho da bandeira no menu de seleção */
-        .flag-icon-large {
-            width: 32px;
-            height: 22px;
-        }
-
-        /* Alinhamento do nome e bandeira no menu */
-        .language-option {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 8px 10px;
-            background-color: #4B5563;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .language-option:hover {
-            background-color: #6B7280; /* Alteração de cor no hover */
-        }
-
-        .language-name {
-            margin-left: 0px;
-            font-size: 1rem;
-            opacity: 0;
-        }
-
-        /* Botão principal de troca de idioma */
-        #language-toggle {
-            display: flex;
-            align-items: center;
-            background-color: transparent;
-            padding: 4px;
-            border-radius: 5px;
-        }
-
-        #language-toggle img {
-            margin-right: 0px; /* Espaçamento entre a bandeira e o texto */
-        }
-
-        /* Animação de abertura do menu */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Animação de fechamento do menu */
-        @keyframes slideUp {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Estilo do menu de idiomas */
-        #language-menu {
-            animation: slideDown 0.3s ease-out;
-            display: none; /* Inicialmente escondido */
-        }
-
-        /* Exibe o menu quando a classe "show" é adicionada */
-        #language-menu.show {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        /* Esconde o menu com animação de slide up */
-        #language-menu.hide {
-            animation: slideUp 0.3s ease-out;
-        }
+        section { display: none; }
+        section.active { display: block; }
     </style>
+
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
     <nav class="bg-gray-800 text-white p-2">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="font-bold text-xl">MTDev</div>
-            <div class="relative">
-                <button id="language-toggle" class="flex items-center space-x-2">
-                    <img id="language-icon" src="https://flagcdn.com/w40/br.png" alt="Idioma" class="flag-icon">
-                </button>
-                <div id="language-menu" class="absolute hidden mt-2 bg-gray-700 rounded shadow-lg">
-                    <button
-                        class="language-option w-full"
-                        onclick="setLanguage('pt')"
-                    >
-                        <img src="https://flagcdn.com/w40/br.png" alt="Português" class="flag-icon-large">
-                        <span class="language-name">‎‎‎.........</span>
-                    </button>
-                    <button
-                        class="language-option w-full"
-                        onclick="setLanguage('en')"
-                    >
-                        <img src="https://flagcdn.com/w40/us.png" alt="English" class="flag-icon-large">
-                        <span class="language-name">‎‎.........</span>
-                    </button>
+            <nav class="bg-gray-800 text-white p-2 fixed top-0 left-0 w-full shadow-md z-50">
+                <div class="container mx-auto flex justify-between items-center">
+                    <div class="font-bold text-xl">MTDev <span class="custom-cursor">|</span></div>
+                    <div class="flex space-x-3">
+                        <a href="#home" class="nav-item" data-target="home">Home</a>
+                        <a href="#projects" class="nav-item" data-target="projects">Projects</a>
+                        <!-- <a href="#contact" class="nav-item" data-target="contact">Contact</a> -->
+                    </div>
                 </div>
-            </div>
+            </nav>
         </div>
     </nav>
 
-    <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
-        <div class="mb-8">
-            <div class="text-4xl md:text-6xl lg:text-8xl font-bold mb-4">
-                <span id="title-text">MTDev está debugando</span><br>
-                <span id="dynamic-text" class="gradient-text"></span><span class="custom-cursor">|</span>
-            </div>
-            <p id="description-text" class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
-                Olá, obrigado por visitar meu website!<br>
-                Em desenvolvimento, para futuros usos.
-            </p>
+    <main class="flex-grow container mx-auto">
+    
+        <div class="container">
+
+            <section id="home" class="active">
+
+                <div class="pt-28"></div>
+    
+                <div class="flex-grow container mx-auto flex flex-col justify-center items-center text-center px-4 py-16">
+                    <div class="mb-8">
+                        <div class="text-4xl md:text-6xl lg:text-9xl font-bold mb-4">
+                            <span id="title-text" class="main_title">Hey, I'm MTDev!</span><br>
+                            <span id="dynamic-text" class="gradient-text"></span><span class="custom-cursor">|</span>
+                        </div>
+                        <p id="description-text" class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
+                            Let's work together and do something <b>incredible</b>?<br>
+                        </p>
+                        <div class="skills">
+                            <span class="skill-tag">Unity</span>
+                            <span class="skill-tag">Unreal</span>
+                            <span class="skill-tag">Godot</span>
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Composer</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="projects">
+                <h1>My Projects</h1>
+                <p class="projects-description-text">My projects developed so far, feel free to look and listen!</p>
+
+                <div class="pt-5"></div>
+
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn game" data-filter="game">Games</button>
+                    <button class="filter-btn music" data-filter="music">Songs</button>
+                </div>
+                <div class="gallery">
+                    <!-- Os projetos serão inseridos aqui dinamicamente via JavaScript -->
+                </div>
+            </section>
+    
+            <section id="contact">
+                <h1>Get in touch</h1>
+                <p class="contact-description-text">Got interested in my work? Feel free to contact me and we can do amazing things together!</p>
+            </section>
+    
         </div>
-    </div>
+
+    </main>
 
     <footer class="bg-gray-800 text-white p-4 text-center">
-        <p id="footer-text">&copy; 2024 MTDev. Todos os direitos reservados.</p>
+        <h2> <b>Quick Links</b> </h2>
+        <div class="social-links">
+            <a href="mailto:mtdevdev@gmail.com" class="social-link" target="_blank">
+                <i class="fa-regular fa-envelope"></i>
+            </a>
+            <a href="https://mtdeveloper.itch.io/" class="social-link" target="_blank">
+                <i class="fab fa-itch-io"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/matheus-mar%C3%A7al-mtdev/" class="social-link" target="_blank">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+        <p id="footer-text">&copy; 2025 MTDev. All rights reserved.</p>
     </footer>
 
     <script>
-        // Traduções
-        const translations = {
-            pt: {
-                title: 'MTDev está debugando',
-                description: 'Olá, obrigado por visitar meu website! Em desenvolvimento, para futuros usos.',
-                footer: '&copy; 2024 MTDev. Todos os direitos reservados.',
-                flag: 'https://flagcdn.com/w40/br.png',
-                label: 'Português',
-                palavras: [
-                    "pesadelos", "código espaguete", "o código que só funciona se você fechar os olhos",
-                    "a atualização que quebrou tudo que funcionava", "problemas que nem o stack overflow resolve",
-                    "sem documentação", "enquanto está sem dormir", "deploys de sexta-feira",
-                    "uma funcionalidade que já funcionava", "o algoritmo que faz sentido... até a próxima atualização",
-                    "condições de corrida", "vazamentos de memória", "erros de 'funciona na minha máquina'",
-                    "bugs causados por digitação", "exceções em tempo de execução", "o próprio debugger",
-                    "depois do café", "o commit de 'não mexe aqui'"
-                ]
-            },
-            en: {
-                title: 'MTDev is debugging',
-                description: 'Hello, thank you for visiting my website! Under development for future use.',
-                footer: '&copy; 2024 MTDev. All rights reserved.',
-                flag: 'https://flagcdn.com/w40/us.png',
-                label: 'English',
-                palavras: [
-                    "nightmares", "spaghetti code", "the code that only works if you close your eyes",
-                    "the update that broke everything that worked", "problems that even stack overflow can't solve",
-                    "no documentation", "while being sleepless", "Friday deploys",
-                    "a feature that already worked", "the algorithm that makes sense... until the next update",
-                    "race conditions", "memory leaks", "errors of 'it works on my machine'",
-                    "bugs caused by typos", "runtime exceptions", "the debugger itself",
-                    "after coffee", "the commit of 'don't touch here'"
-                ]
-            }
-        };
-    
-    // Verificar o idioma salvo no localStorage ao carregar a página
-        const savedLanguage = ['pt', 'en'].includes(localStorage.getItem('language')) ? localStorage.getItem('language') : 'pt';
-        setLanguage(savedLanguage, true); // Inicializa o idioma com base no valor salvo
+        document.addEventListener("DOMContentLoaded", function () {
+            const navItems = document.querySelectorAll(".nav-item");
+            const sections = document.querySelectorAll("section");
+            let isTransitioning = false;
+            
+            navItems.forEach(item => {
+                item.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    if (isTransitioning) return;
+                    isTransitioning = true;
+                    
+                    const targetId = this.getAttribute("data-target");
+                    const targetSection = document.getElementById(targetId);
+                    const activeSection = document.querySelector("section.active");
+                    
+                    if (activeSection !== targetSection) {
+                        activeSection.style.opacity = "0";
+                        setTimeout(() => {
+                            activeSection.classList.remove("active");
+                            activeSection.style.display = "none";
+                            
+                            targetSection.style.display = "block";
+                            setTimeout(() => {
+                                targetSection.classList.add("active");
+                                targetSection.style.opacity = "1";
+                                isTransitioning = false;
+                            }, 10);
+                        }, 500); // Tempo da animação
+                    } else {
+                        isTransitioning = false;
+                    }
+                });
+            });
+        });
+    </script>
 
-        // Atualiza o idioma na página
-        function setLanguage(lang, fromReload = false) {
-            if (!translations[lang]) {
-                console.error(`Idioma não suportado: ${lang}`);
-                return;
-            }
-
-            const { title, description, footer, flag, label, palavras } = translations[lang];
-
-
-            // Armazenar a preferência de idioma no localStorage
-            localStorage.setItem('language', lang);
-
-            document.getElementById('title-text').textContent = title;
-            document.getElementById('description-text').textContent = description;
-            document.getElementById('footer-text').innerHTML = footer;
-            document.getElementById('language-icon').src = flag;
-            palavrasDigitadas(palavras);  // Atualiza as palavras digitadas
-
-            // Se não for um reload, recarregamos a página para refletir completamente a mudança
-            if (!fromReload) {
-                window.location.reload();
+    <script>
+        const phrases = [
+            "Developer", "Artist", "Composer", "Programmer"
+        ];
+        
+        async function typePhrases(phrases) {
+            const textElement = document.getElementById('dynamic-text');
+            while (true) { 
+                for (let phrase of phrases) {
+                    await typePhrase(phrase, textElement);
+                }
             }
         }
 
-        // Alterna a visibilidade do menu de idiomas
-        function toggleLanguageMenu() {
-            const menu = document.getElementById('language-menu');
-            if (menu.classList.contains('show')) {
-                menu.classList.remove('show');
-                menu.classList.add('hide'); // Adiciona animação de fechamento
-                // Após a animação de fechamento, ocultamos o menu
-                setTimeout(() => {
-                    menu.classList.remove('hide');
-                    menu.style.display = 'none'; // Garante que o menu seja ocultado após a animação
-                }, 300); // Tempo necessário para a animação
-            } else {
-                menu.style.display = 'block'; // Exibe o menu antes de animar
-                menu.classList.add('show'); // Adiciona animação de abertura
-            }
-        }
-
-        document.getElementById('language-toggle').addEventListener('click', toggleLanguageMenu);
-
-        // Função de digitação das palavras
-        async function palavrasDigitadas(palavras) {
-            const elementoTexto = document.getElementById('dynamic-text');
-            elementoTexto.textContent = ''; // Limpa o conteúdo antes de digitar novamente
-
-            for (let palavra of palavras) {
-                await digitarPalavra(palavra, elementoTexto);
-            }
-        }
-
-        async function digitarPalavra(palavra, elementoTexto) {
-            for (let i = 0; i < palavra.length; i++) {
-                elementoTexto.textContent += palavra[i];
+        async function typePhrase(phrase, textElement) {
+            textElement.textContent = ''; // Clear before typing
+            for (let i = 0; i < phrase.length; i++) {
+                textElement.textContent += phrase[i];
                 await new Promise(resolve => setTimeout(resolve, 150));
             }
             await new Promise(resolve => setTimeout(resolve, 2000));
-            await apagarPalavra(elementoTexto);
+            await erasePhrase(textElement);
         }
 
-        async function apagarPalavra(elementoTexto) {
-            while (elementoTexto.textContent.length > 0) {
-                elementoTexto.textContent = elementoTexto.textContent.slice(0, -1);
+        async function erasePhrase(textElement) {
+            while (textElement.textContent.length > 0) {
+                textElement.textContent = textElement.textContent.slice(0, -1);
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
         }
+
+        document.addEventListener("DOMContentLoaded", () => typePhrases(phrases));
     </script>
+
+    <script>
+    // Base de dados de projetos
+    const projectsDatabase = [
+        // Projetos de Jogos
+        {
+            type: "game",
+            title: "Galactic Paradox",
+            date: "July 2024",
+            description: "A 2D game made in Godot that is set to the rhythm of music, in an 8-bit style. Made for a course project.",
+            cover: "/Images/GameImages/GalacticParadoxIcon.jpg",
+            links: [
+                { text: "Itch", url: "https://mtdeveloper.itch.io/galactic-paradox" },
+            ]
+        },
+        
+        // Projetos de Música
+        {
+            type: "music",
+            title: "Distant Notes",
+            date: "March 2025",
+            description: "",
+            cover: "/Images/MusicImages/DistantNotesCover.png",
+            audioSrc: "/Sounds/Music/Distant_Notes.mp3"
+        },
+        {
+            type: "music",
+            title: "Far Light",
+            date: "March 2025",
+            description: "",
+            cover: "/Images/MusicImages/FarLightCover.png",
+            audioSrc: "/Sounds/Music/Far_Light.mp3"
+        },
+    ];
+
+    // Função para renderizar os projetos
+    function renderProjects(filter = 'all') {
+        const gallery = document.querySelector('.gallery');
+        gallery.innerHTML = ''; // Limpa a galeria atual
+
+        const filteredProjects = filter === 'all'
+            ? projectsDatabase
+            : projectsDatabase.filter(project => project.type === filter);
+
+        filteredProjects.forEach((project, index) => {
+            const projectCard = document.createElement('div');
+            projectCard.className = `project-card ${project.type} fade-in`;
+            projectCard.style.animationDelay = `${index * 0.1}s`; // Efeito cascata
+
+            let cardContent = `
+                <div class="cover">
+                    <img src="${project.cover}" alt="${project.title}">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">${project.title}</h3>
+                    <p class="project-date">${project.date}</p>
+                    <p class="project-description">${project.description}</p>
+            `;
+
+            if (project.type === 'music') {
+                cardContent += `
+                    <audio class="audio-player" controls>
+                        <source src="${project.audioSrc}" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                `;
+            } else if (project.type === 'game') {
+                cardContent += `<div class="project-links">`;
+                project.links.forEach(link => {
+                    cardContent += `<a href="${link.url}" class="project-btn" target="_blank">${link.text}</a>`;
+                });
+                cardContent += `</div>`;
+            }
+
+            cardContent += `</div>`;
+            projectCard.innerHTML = cardContent;
+            gallery.appendChild(projectCard);
+
+            // Adiciona um pequeno atraso para ativar a animação
+            setTimeout(() => projectCard.classList.add("visible"), 50);
+        });
+    }
+
+    // Função para adicionar um novo projeto de jogo
+    function addNewGame(title, date, description, coverSrc, links) {
+        projectsDatabase.push({
+            type: "game",
+            title: title,
+            date: date,
+            description: description,
+            cover: coverSrc,
+            links: links
+        });
+        renderProjects(document.querySelector('.filter-btn.active').dataset.filter);
+    }
+
+    // Função para adicionar uma nova música
+    function addNewMusic(title, date, description, coverSrc, audioSrc) {
+        projectsDatabase.push({
+            type: "music",
+            title: title,
+            date: date,
+            description: description,
+            cover: coverSrc,
+            audioSrc: audioSrc
+        });
+        renderProjects(document.querySelector('.filter-btn.active').dataset.filter);
+    }
+
+    // Inicializar a galeria
+    document.addEventListener('DOMContentLoaded', function() {
+        // Renderizar todos os projetos ao carregar
+        renderProjects();
+        
+        // Configurar os botões de filtro
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remover a classe active de todos os botões
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Adicionar a classe active ao botão clicado
+                this.classList.add('active');
+                // Renderizar projetos filtrados
+                renderProjects(this.dataset.filter);
+            });
+        });
+
+    });
+
+    // Exemplos de como adicionar novos projetos:
+    // addNewGame("Novo Jogo", "Março 2023", "Descrição do novo jogo", "/api/placeholder/400/300", [{ text: "Jogar", url: "#" }]);
+    // addNewMusic("Nova Música", "Abril 2023", "Descrição da nova música", "/api/placeholder/400/400", "#");
+    </script>
+
+
 </body>
 </html>
