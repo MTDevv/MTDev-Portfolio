@@ -74,7 +74,7 @@ section.active {
 }
 
 .main_title {
-    font-size: 5vw;
+    font-size: 7vw;
 }
 
 :root {
@@ -111,6 +111,46 @@ a {
 a:hover {
     opacity: 0.8;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 50px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #0D324F;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #27476d;
+    border-radius: 50px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #27558d;
+  }
+
+#topbar {
+    backdrop-filter: blur(5px);
+}
+
+#footerBar {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+#backgroundVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.2;
+    z-index: -1;
+ }
 
 /* Layout */
 .container {
@@ -246,7 +286,7 @@ nav {
 
 .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 20px rgba(84, 115, 255, 0.12);
 }
 
 .cover {
@@ -283,14 +323,15 @@ nav {
 }
 
 .project-title {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 8px;
 }
 
 .project-date {
     color: var(--secondary);
-    font-size: 0.85rem;
+    font-size: 1rem;
+    font-weight: 500;
     margin-bottom: 12px;
 }
 
